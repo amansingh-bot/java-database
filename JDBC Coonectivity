@@ -1,0 +1,37 @@
+import java.sql.*;
+//import javax.sql.*;
+import java.lang.*;
+import java.io.*;
+class jdbcExample
+{
+public static void main(String args[])
+{
+	Connection cc;
+	Statement st;
+	ResultSet rs;
+	try
+	{
+	Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	System.out.println("driver created");
+	cc=DriverManager.getConnection("jdbc:odbc:odbc_test","root","root");
+	System.out.println("connection established");
+	st=cc.createStatement();
+	System.out.println("STATEMENT created");
+	//st.execute("create table emp(empno integer,empname text(20))");   // create table cmd
+	st.executeUpdate("insert into emp values(009,'Deva')");          // insert cmd
+	rs=st.executeQuery("select * from emp");
+	System.out.println("empno:empname:");
+	while(rs.next())
+	{
+	int ii=rs.getInt(1);
+	String s=rs.getString(2);
+	System.out.println(ii+"\t"+s);
+	}
+	cc.close();
+	}catch(Exception e)
+	{
+	System.out.println("exception:"+e);
+	}
+}
+}
+
